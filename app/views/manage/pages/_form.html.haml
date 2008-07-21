@@ -1,0 +1,24 @@
+.buttons
+  = link_btn(manage_pages_path, "Back to list", "list")
+%br.clear
+%br/
+= error_messages_for :page
+- content_for(:head) do
+  = javascript_include_tag '/javascripts/fckeditor/fckeditor'
+
+- form_for(@page, :url => manage_page_path(@page)) do |f|
+  = f.text_field :title, :size => 51
+  %p
+    = f.label :name, "http://www.yuno.com.br/page/"
+    = f.text_field :name, :size => 15
+  %p
+    = f.label :published, "Publish?"
+    = f.select :published, [["no", false], ["yes", true]]
+  %p
+    = f.label :location, "Page position"
+    = f.select :location, [["Top", "top"]]
+  %br/
+  = fckeditor_textarea("page", "body", :width => '100%', :height => '300px')
+  %p
+    .buttons
+      = link_btn('submit', btn_name, 'add', :class => "positive")

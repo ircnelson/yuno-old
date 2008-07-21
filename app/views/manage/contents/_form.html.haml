@@ -1,0 +1,31 @@
+.buttons
+  = link_btn(manage_contents_path, "Back to list", "list")
+%br.clear
+
+= error_messages_for :content
+
+- content_for(:head) do
+  = javascript_include_tag '/javascripts/fckeditor/fckeditor'
+
+- form_for(@content, :url => manage_content_path(@content)) do |f|
+  %p= f.text_field :title, :size => 80
+  - if admin?
+    %div.publish-option
+      = f.label :published, "Publish?", :class => "xx-small"
+      = f.select :published, [["yes", true], ["no", false]]
+      == &mdash;
+      = f.datetime_select :published_at
+    %div.comment-option
+      = f.label :comments_filter, "Comments", :class => "xx-small"
+      = f.select :comments_filter, [["unlock", 0], ["lock", 1], ["hidden", 2]]
+  - if @categories.size > 0
+    %div.category-option
+      %h4 Categories
+      %ul
+        - @categories.each do |category|
+          %li= check_box_tag("content[category_ids][]", category.id, @content.categories.include?(category), { :id => "content_category_#{category.id}" }) + f.label("category_#{category.id}", category.name)
+  %br/
+  = fckeditor_textarea("content", "body", :width => '100%', :height => '230px', :toolbarSet => current_user.fcksetting)
+  %p
+    .buttons
+      = link_btn('submit', btn_name, 'add', :class => "positive")

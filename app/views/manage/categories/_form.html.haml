@@ -1,0 +1,12 @@
+= error_messages_for :category
+
+- form_for(@category, :url => manage_category_path(@category), :html => { :multipart => true }) do |f|
+  %p
+    = f.label :name, "Category Name"
+    = f.text_field :name, :size => 15
+  - fields_for :asset, @category do |display|
+    = display.label :uploaded_data, "Upload avatar"
+    = display.file_field :uploaded_data
+  %p
+    .buttons
+      = link_btn('submit', "Create", 'add', :class => "positive")

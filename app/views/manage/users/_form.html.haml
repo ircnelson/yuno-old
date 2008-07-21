@@ -1,0 +1,50 @@
+- if controller.controller_name =~ /account/
+
+  - if contributor?
+    %p.information
+      %span= "You want contribute with us? " + link_to("click here", new_manage_content_path)
+
+  - field_set_tag do
+    - form_for(@user, :url => url_for(:controller => "account", :action => "update")) do |f|
+      %p
+        = f.label :email, "E-mail:"
+        %br/
+        = f.text_field :email, :class => "icon-email pIcon16"
+      %p
+        = f.label :time_zone, "Timezone:"
+        %br/
+        = f.time_zone_select :time_zone, TZInfo::Timezone.all.sort, :model => TZInfo::Timezone
+      
+      %p
+        .buttons
+          =link_btn('submit', 'Save', 'tick')
+          =link_btn('reset', 'Reset', 'cross')
+
+  %br.clear
+
+  - field_set_tag do
+    - form_for(@user, :url => url_for(:controller => "account", :action => "update")) do |f|
+      %h3 Change your password
+      %p
+        = f.label :password, "Password"
+        %br/
+        = f.text_field :password, :class => "icon-password pIcon16"
+      %p
+        = f.label :password_confirmation, "Password Confirm"
+        %br/
+        = f.text_field :password_confirmation, :class => "icon-password pIcon16"
+      %p
+        .buttons
+          =link_btn('submit', 'Change', 'textfield_key')
+
+- elsif admin?
+  - form_for(@user, :url => manage_user_path(@user)) do |f|
+    %p
+      = f.label :level, "Level", :class => "xx-small"
+      = f.select :level, [["Normal", "normal"], ["Contributor", "contributor"], ["Administrator", "admin"]]
+    %p
+      = f.label :fcktoolbar, "Fck Toolbar", :class => "xx-small"
+      = f.select :fcktoolbar, [["Basic", "Basic"], ["Default", "Default"]]
+    %p
+      .buttons
+        =link_btn('submit', 'Save', 'tick')

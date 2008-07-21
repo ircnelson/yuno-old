@@ -1,0 +1,32 @@
+- title "Pages List"
+
+.buttons
+  = link_btn(new_manage_page_path, "write a new page", "add")
+%br.clear
+- form_tag url_for({:controller => "pages", :action => "checkboxes"}) do
+  %table
+    %thead
+      %tr
+        %th
+        %th{ :width => "320" } Title
+        %th URL
+        %th{ :width => "120" } Date
+        %th Mode
+        %th Edit
+        %th Delete
+    %tbody
+      - for page in @pages
+        %tr{ :class => cycle("light", "white") }
+        %td= check_box_tag "check[]", page.id
+        %td.left= link_to page.title, "/page/"+page.name
+        %td= "/page/"+page.name
+        %td= page.created_at.strftime("%c")
+        %td= page.published ? _icon('tick') : _icon('cross')
+        %td
+          .buttons= link_btn_edit(edit_manage_page_path(page))
+        %td
+          .buttons= link_btn_delete(manage_page_path(page))
+
+  .buttons
+    /= link_btn('submit', 'Delete', 'delete', :name => "option", :value => "Delete"
+    = link_btn('submit', 'Change Status', '', :name => "option", :value => "Change Status")

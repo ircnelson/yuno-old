@@ -1,0 +1,36 @@
+- title "'#{@content.title}'"
+
+- div_for(@content) do
+  %h2= link_to @content.title, content_path(@content)
+  #meta
+    %span.pub-date= date_format(@content.published_at)
+    por
+    %span.author= getuser(@content)
+  = @content.body
+  
+  %a{ :name => "comments" }
+  #content-comments
+    - show_comments(@content) do
+      %h2 Comments
+      - @comments.each do |c|
+        = display_render "manage/comments/list", { :comment => c, :content => @content }
+        %br.clear
+
+    - enable_comments(@content) do
+      = error_messages_for :comment
+      #form
+        - field_set_tag do
+          - form_for([@content, @comments.build]) do |f|
+            - if logged_in?
+              = hidden_field_tag "comment[name]", current_user.login
+            - else
+              = f.text_field :name, :class => "icon-user pIcon16"
+            %br/
+            = hidden_field_tag "comment[email]"
+            = toggle_btn "Are you have <acronym title=\"Uniform Resource Identifier\">URI</acronym>?", "comment_uri"
+            %br/
+            = f.text_field :uri, { :class => "icon-link pIcon16", :style => "display: none;" }
+            %br/
+            = f.text_area :body, :cols => 30, :rows => 5
+            .buttons
+              = link_btn('submit', "Comment", 'user_comment')

@@ -1,0 +1,23 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  database: yunocomb_development
+  username: yunocomb_site
+  password: ycombpass2551
+  host: localhost
+
+test:
+  adapter: mysql
+  encoding: utf8
+  database: yunocomb_test
+  username: yunocomb_site
+  password: ycombpass2551
+  host: localhost
+
+production:
+  adapter: mysql
+  encoding: utf8
+  database: yunocomb_production
+  username: yunocomb_site
+  password: ycombpass2551
+  host: localhost

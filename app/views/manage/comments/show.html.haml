@@ -1,0 +1,13 @@
+- title "Reply Comment"
+
+= link_to 'Back', content_path(@content, :anchor => "comments")
+= display_render "list", { :comment => @replythiscomment, :content => @content }
+%br.clear
+- field_set_tag do
+  - form_for :comment, :url => url_for(:controller => :comments, :action => :reply, :id => nil) do |f|
+    = f.text_area :body, :cols => 30, :rows => 5
+    = hidden_field_tag "comment[name]", current_user.login
+    = hidden_field_tag "comment[parent_id]", params[:id]
+    = hidden_field_tag "comment[content_id]", params[:content_id]
+    .buttons
+      = link_btn('submit', "Comment", 'user_comment')

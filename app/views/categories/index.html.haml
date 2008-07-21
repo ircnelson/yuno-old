@@ -1,0 +1,7 @@
+%h2 Be organized. :)
+
+%div#content
+  - if @categories.size > 0
+    %ul
+    - for category in @categories
+      = content_tag(:li, category_link(category)) if category.contents.size > 0

@@ -1,0 +1,28 @@
+<html>
+<head>
+<%= javascript_include_tag "#{Fckeditor.config[:base]}fckeditor" %>
+</head>
+<body>
+
+<%=
+  fckeditor( :object, :value, {
+      :width      => '600px',
+      :height     => '500px',
+      :custom_config  => '/javascripts/fckconfig_custom.js'
+    }
+  )
+-%>
+
+<p>
+Use these to debug
+<form target=_blank" action="/fckeditor/connector?Command=FileUpload&Type=Image&CurrentFolder=/" method="post" enctype="multipart/form-data">
+  <input type="file" name="NewFile">
+  <input type="submit">
+</form>
+</p>
+
+<a href="/fckeditor/connector?Command=GetFoldersAndFiles&CurrentFolder=/" target="_blank">Test Folder and Files</a>
+<br><a href="/fckeditor/connector?Command=GetFolders&CurrentFolder=/" target="_blank">Test Folder</a>
+
+</body>
+</html>

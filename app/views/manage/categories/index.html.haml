@@ -1,0 +1,26 @@
+- title "Categories"
+%table
+  %thead
+    %tr
+      %th{ :width => "240" } Name
+      %th{ :width => "100" } Related
+      %th{ :width => "45" } Created at
+      %th{ :width => "20" } Edit
+      %th{ :width => "20" } Delete
+  %tbody
+  - if @categories.size > 0
+    - for category in @categories
+      %tr{ :class => cycle("light", "white") }
+        %td.left= link_to category.name, category.asset.public_filename
+        %td= link_to category.contents.count, manage_category_path(category)
+        %td= category.created_at.strftime("%c")
+        %td
+          .buttons= link_btn_edit(edit_manage_category_path(category))
+        %td
+          .buttons= link_btn_delete(manage_category_path(category))
+  - else
+    %tr
+      %td{ :align => "center", :colspan => 5 } empty
+
+%div#new-category
+  = render :partial => "form", :locals => { :quick => true }

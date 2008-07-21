@@ -1,0 +1,14 @@
+- title "Category: #{@category.name}"
+
+%h2 Be organized. :)
+
+%div#categories
+  %ol
+    - for category in @categories
+      = content_tag(:li, category_link(category)) if category.contents.size > 0
+%div#content
+  - div_for(@category) do
+    %h3= @category.name
+    %ul
+    - for content in @category.contents
+      = content_tag(:li, link_to(content.title, content_path(content)))

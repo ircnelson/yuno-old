@@ -1,0 +1,5 @@
+- title "Content"
+.buttons
+  = link_btn(new_manage_content_path, "write a new content", "add")
+%br.clear
+= render :partial => "list", :object => @contents

@@ -1,0 +1,19 @@
+- content_for(:head) do
+  = "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"Atom\" href=\"/contents.atom\" />"
+
+%h2 Pense, imagine um mundo. Agora navegue pela YUNO e socialize suas id&eacute;ias - compartilhe o seu mundo.
+
+- if not @contents.blank?
+  %div#content
+    %h3 Contents
+    %div#contents
+      - for content in @contents
+        - div_for(content, :class => "box-content") do
+          = cat_avatar(content)
+          %h4
+            =link_to content.title, content_path(content)
+            %span= date_format(content.created_at)
+          %p= read_more(content)
+    = will_paginate @contents
+- else
+  = "Sorry, we do not have any contents published :("

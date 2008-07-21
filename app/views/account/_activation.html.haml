@@ -1,0 +1,7 @@
+- form_tag({:controller => :account, :action => "activate"}) do
+  %p
+    %label{ :for => "activation_code" } Code Activation
+    %br/
+    = text_field_tag(:activation_code, params[:activation_code], :size=>50 )
+  %p
+    = submit_tag 'Activate'

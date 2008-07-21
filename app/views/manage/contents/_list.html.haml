@@ -1,0 +1,34 @@
+- form_tag url_for({:controller => "contents", :action => "checkboxes"}) do
+  %table
+    %thead
+      %tr
+        - if admin?
+          %th
+          %th{ :width => "320" } Title
+          %th Comments
+          %th{ :width => "120" } Date
+          %th Mode
+          - if admin?
+            %th Edit
+            %th Delete
+    %tbody
+      - for content in @contents
+        %tr{ :class => cycle("light", "white") }
+          - if admin?
+            %td= check_box_tag "check[]", content.id
+            %td.left= link_to content.title, content_path(content)
+            - if contributor?
+              %td= pluralize(content.comments.size, "Comment")
+            - else
+              %td= link_to pluralize(content.comments.size, "Comment"), manage_content_comments_path(content)
+            %td= content.created_at.strftime("%c")
+            %td= content.published ? _icon('tick') : _icon('cross')
+            - if admin?
+              %td
+                .buttons= link_btn_edit(edit_manage_content_path(content))
+              %td
+                .buttons= link_btn_delete(manage_content_path(content))
+
+  - if admin?
+    .buttons
+      = link_btn('submit', 'Change Status', '', :name => "option", :value => "Change Status")

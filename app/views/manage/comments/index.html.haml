@@ -1,0 +1,8 @@
+%div#content-comments
+  %h5== Comments of: #{link_to @content.title, content_path(@content)}
+  - if @comments.size > 0
+    - @comments.each do |c|
+      = display_render "list", { :comment => c, :content => @content }
+      
+  - else
+    == This post no have comments

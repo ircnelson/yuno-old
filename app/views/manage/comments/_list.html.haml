@@ -1,0 +1,17 @@
+- div_for(comment) do
+  .comment-area
+    = simple_format(escape_once(comment.body))
+    .comment-meta
+      %span.author
+        %strong
+          = (!comment.uri.blank?) ? link_to(comment.name, comment.uri) : comment.name
+        = "(#{comment.ip})" if comment.ip && admin?
+      %span= date_format(comment.created_at)
+      - if content && admin? && !@replythiscomment
+        %br/
+        = link_to 'Reply', manage_content_comment_path(content, comment)
+        = link_to_delete manage_content_comment_path(content, comment)
+        /
+          .buttons
+            = link_btn(manage_content_comment_path(content, comment), 'Reply', 'comment_add')
+            = link_btn(manage_content_comment_path(content, comment), 'Delete', 'comment_delete', { :method => "delete", :confirm => "Are you sure?" })

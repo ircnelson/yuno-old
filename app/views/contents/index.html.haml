@@ -1,0 +1,17 @@
+#post
+  - if @contents
+    - for content in @contents
+      - div_for(content) do
+        %h2=link_to content.title, content_path(content)
+        #meta
+          %span.pub-date= date_format(content.published_at)
+          por
+          %span.author= getuser(content)
+          /%br/
+          /%span.categories= "<strong>#{pluralize(content.categories,"Category")}:</strong> " + cat(content.categories)
+          %span.comments
+          - if enable_comments(content) 
+            = link_to(pluralize(content.comments.count, "Comment"), content_path(content, :anchor => "comments"))
+        = content.body
+  - else
+    = "Sorry, we do not have any contents published :("

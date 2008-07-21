@@ -1,0 +1,56 @@
+!!!
+%html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html;charset=UTF-8", "http-equiv" => "content-type" }/
+    %title= yield :title
+    = javascript_include_tag :defaults
+    = stylesheet_link_tag 'style'
+    = yield :head
+  %body
+    #header
+      %h1
+        =link_to "yuno", "/"
+      #nav-top
+        - if logged_in?
+          =link_to "Perfil", account_path
+          |
+          - if admin?
+            =link_to "Painel", manager_path
+            |
+          =link_to "Sair", logout_path
+        - else
+          =link_to "Entrar", login_path
+
+      #bar
+        %span.feed=link_to image_tag("/images/layout/feed32x32.png"), "/"
+        %p Pense, imagine um mundo. Agora navegue pela YUNO e socialize suas id&eacute;ias, compartilhe o seu mundo.
+    
+    - if ((contributor? || admin?) && controller.controller_path =~ /manage/)
+      #menu-panel
+        #nav
+          %ul
+            %li= link_to "Manage", manager_path, :class => class_manager
+            %li= link_to "Contents", manage_contents_path, :class => class_contents
+            - if admin?
+              %li= link_to "Pages", manage_pages_path, :class => class_pages
+              %li= link_to "Categories", manage_categories_path, :class => class_categories
+              %li.separate &nbsp;
+              %li= link_to "Users", manage_users_path, :class => class_users
+
+    #container
+   
+      - if flash[:notice]
+        .flash-notice
+          %span= flash[:notice]
+      - if flash[:error]
+        .flash-error
+          %span= flash[:error]
+
+      #main
+        = yield
+
+    #footer
+      %ul
+        %li=link_to "yuno.com.br", "/"
+        %li=link_to "yuno.com.br", "/"
+        %li=link_to "yuno.com.br", "/"

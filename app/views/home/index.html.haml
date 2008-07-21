@@ -1,0 +1,17 @@
+#post
+  - if @paginate_contents
+    = will_paginate @paginate_contents
+    - for content in @paginate_contents
+      - div_for(content) do
+        %h2=link_to content.title, content_path(content)
+        #meta
+          %span.pub-date= date_format(content.published_at)
+          por
+          %span.author= getuser(content)
+          %span.comments
+          - if enable_comments(content) 
+            |
+            = link_to(pluralize(content.comments.count, "Comentário"), content_path(content, :anchor => "comments"))
+        = content.body
+  - else
+    = "Sorry, we do not have any contents published :("

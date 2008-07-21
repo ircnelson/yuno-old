@@ -1,0 +1,23 @@
+= error_messages_for :user
+- form_for :user, :url => url_for(:controller => :account, :action => :register) do |f| 
+  %h4 Register your account, is free. :-)
+  %p
+    = f.label :login, "Login"
+    %br/
+    = f.text_field :login, :class => "icon-user pIcon16"
+    #login_status
+  %p
+    = f.label :email, "E-mail"
+    %br/
+    = f.text_field :email, :class => "icon-email pIcon16"
+  %p
+    = f.label :password, "Password"
+    %br/
+    = f.password_field :password, :class => "icon-password pIcon16"
+  %p
+    = f.label :password_confirmation, "Password Confirm"
+    %br/
+    = f.password_field :password_confirmation, :class => "icon-password pIcon16"
+  %p= submit_tag "Sign up", :class => "button"
+
+= observe_field(:user_login, :url => { :action => :check_login }, :frequency => 0.5, :update => :login_status, :with => "user[login]")
